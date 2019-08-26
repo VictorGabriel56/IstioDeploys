@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloapp
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway                      # 1
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        prefix: /callback
+    - uri:
+        exact: /logout
+    - uri:        
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: helloapp1             # 2
+        port:
+          number: 8001

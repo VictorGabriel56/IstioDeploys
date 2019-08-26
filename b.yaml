@@ -1,0 +1,23 @@
+kind: VirtualService
+metadata:
+  name: sa-external-services
+spec:
+  hosts:
+  - helloapp
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        exact: /
+    - uri:
+        exact: /callback
+    - uri:
+        prefix: /static
+    - uri:
+        regex: '^.*\.(ico|png|jpg)$'
+    route:
+    - destination:
+        host: helloapp
+        port:
+          number: 8001 
